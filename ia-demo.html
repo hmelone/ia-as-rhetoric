@@ -1,0 +1,1062 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="An interactive demonstration of good versus bad information architecture — using only HTML and CSS.">
+  <meta name="author" content="Holly Melone">
+  <meta name="copyright" content="Copyright 2025 Holly Melone. All rights reserved.">
+  <title>IA in Practice: Good vs. Bad — Information Architecture as Rhetorical Practice</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+
+    /* ── Intro band ── */
+    .demo-intro {
+      background: #1e1e1e;
+      color: #e8e2d9;
+      padding: 2rem;
+      border-bottom: 3px solid var(--accent);
+    }
+
+    .demo-intro-inner {
+      max-width: var(--max-w);
+      margin: 0 auto;
+    }
+
+    .demo-intro h1 {
+      font-family: var(--font-display);
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: #fff;
+      border: none;
+      padding: 0;
+      margin: 0 0 0.5rem;
+    }
+
+    .demo-intro p {
+      font-size: 0.88rem;
+      color: #bbb;
+      line-height: 1.7;
+      margin: 0;
+    }
+
+    .demo-intro strong { color: #c8a86a; }
+
+    /* ── Demo cards ── */
+    .demo-cards {
+      max-width: var(--max-w);
+      margin: 2.5rem auto 0;
+      padding: 0 2rem;
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 1.5rem;
+    }
+
+    .demo-card {
+      border: 1px solid var(--border-fine);
+      background: var(--paper);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .demo-card-header {
+      padding: 1rem 1.25rem 0.85rem;
+      border-bottom: 1px solid var(--border-fine);
+    }
+
+    .demo-card-label {
+      font-size: 0.68rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--ink-light);
+      margin-bottom: 0.3rem;
+    }
+
+    .demo-card h3 {
+      font-family: var(--font-display);
+      font-size: 1.05rem;
+      font-weight: 600;
+      font-style: normal;
+      color: var(--ink);
+      margin: 0;
+    }
+
+    .demo-card-body {
+      padding: 1rem 1.25rem;
+      font-size: 0.83rem;
+      line-height: 1.65;
+      color: var(--ink-light);
+      flex: 1;
+    }
+
+    .demo-card-body p { margin-bottom: 0.65rem; }
+    .demo-card-body p:last-child { margin-bottom: 0; }
+
+    .demo-card-footer {
+      padding: 0.9rem 1.25rem;
+      border-top: 1px solid var(--border-fine);
+    }
+
+    .demo-btn {
+      display: block;
+      width: 100%;
+      padding: 0.65rem 1rem;
+      text-align: center;
+      font-family: var(--font-body);
+      font-size: 0.7rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      text-decoration: none;
+      white-space: nowrap;
+      background: #1e1e1e;
+      color: #e8e2d9;
+      transition: background 0.15s, color 0.15s;
+    }
+
+    .demo-btn:hover {
+      background: var(--accent);
+      color: #fff;
+      text-decoration: none;
+    }
+
+    /* Legacy class kept for backward compatibility — same as .demo-btn now */
+    .demo-btn-dark {
+      background: #1e1e1e;
+      color: #e8e2d9;
+    }
+
+    .demo-btn-dark:hover { background: var(--accent); color: #fff; text-decoration: none; }
+
+    /* ── Section wrapper ── */
+    .demo-section {
+      max-width: var(--max-w);
+      margin: 3rem auto 0;
+      padding: 0 2rem;
+    }
+
+    .demo-section h2 {
+      font-family: var(--font-display);
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: var(--ink);
+      border-bottom: 1px solid var(--border-fine);
+      padding-bottom: 0.4rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .demo-section > p {
+      font-size: 0.85rem;
+      color: var(--ink-light);
+      margin-bottom: 1.5rem;
+      line-height: 1.65;
+    }
+
+    /* ─────────────────────────────────────────────
+       DEMO 2: SIDE-BY-SIDE COMPARISON
+       Pure CSS — two static columns, no toggle.
+       Each column renders the same content in a
+       different IA. Users see both simultaneously.
+    ───────────────────────────────────────────── */
+
+    .compare-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0;
+      border: 1px solid var(--border-fine);
+      margin-bottom: 1.25rem;
+    }
+
+    .pane-label {
+      padding: 0.55rem 1rem;
+      font-size: 0.72rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      font-family: var(--font-body);
+      font-weight: 600;
+      border-bottom: 1px solid var(--border-fine);
+    }
+
+    .pane-good { border-right: 1px solid var(--border-fine); }
+    .pane-good .pane-label { background: #e8f0e8; color: #2a5a2a; }
+    .pane-bad  .pane-label { background: #f0e0e0; color: #7a1a1a; }
+
+    .pane-body { padding: 1.25rem; min-height: 380px; }
+
+    /* Good pane micro-styles */
+    .g-nav {
+      background: var(--accent);
+      margin: -1.25rem -1.25rem 1rem;
+      padding: 0.4rem 0.85rem;
+      display: flex;
+      flex-wrap: wrap;
+    }
+
+    .g-nav span {
+      color: #faeaea;
+      font-size: 0.65rem;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+      padding: 0.3rem 0.6rem;
+    }
+
+    .g-nav span.on { background: rgba(0,0,0,0.25); color: #fff; }
+
+    .g-bc {
+      font-size: 0.7rem;
+      color: var(--ink-light);
+      margin-bottom: 0.9rem;
+      padding-bottom: 0.4rem;
+      border-bottom: 1px solid var(--border-fine);
+    }
+
+    .g-bc strong { color: var(--accent); }
+
+    .g-label {
+      font-size: 0.65rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--ink-light);
+      margin-bottom: 0.35rem;
+    }
+
+    .g-h1 {
+      font-family: var(--font-display);
+      font-size: 1.15rem;
+      font-weight: 700;
+      line-height: 1.2;
+      margin-bottom: 0.65rem;
+    }
+
+    .g-lede {
+      border-left: 3px solid var(--accent);
+      padding-left: 0.85rem;
+      font-size: 0.82rem;
+      margin-bottom: 0.85rem;
+      line-height: 1.6;
+    }
+
+    .g-pull {
+      float: right;
+      width: 42%;
+      margin: 0 0 0.65rem 0.85rem;
+      padding: 0.6rem 0.75rem;
+      background: var(--pull-bg);
+      border-left: 3px solid var(--accent);
+      font-family: var(--font-display);
+      font-size: 0.78rem;
+      font-style: italic;
+      line-height: 1.45;
+    }
+
+    .g-pull cite {
+      display: block;
+      font-family: var(--font-body);
+      font-size: 0.62rem;
+      font-style: normal;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--ink-light);
+      margin-top: 0.3rem;
+    }
+
+    .g-p { font-size: 0.8rem; margin-bottom: 0.6rem; line-height: 1.6; }
+
+    /* Bad pane micro-styles */
+    .b-nav {
+      background: #333;
+      margin: -1.25rem -1.25rem 0.85rem;
+      padding: 0.4rem 0.85rem;
+      font-size: 0.65rem;
+    }
+
+    .b-nav a { color: #ffb700; margin-right: 6px; font-family: Arial, sans-serif; }
+
+    .b-h1 { font-family: Impact, sans-serif; font-size: 1.4rem; color: #7b2fff; margin-bottom: 0.2rem; }
+    .b-h2 { font-family: 'Comic Sans MS', cursive; font-size: 0.88rem; color: #ff2fa0; border: 2px dashed red; display: inline-block; padding: 2px 5px; margin-bottom: 0.65rem; }
+
+    .b-p {
+      font-family: 'Comic Sans MS', cursive;
+      font-size: 0.78rem;
+      background: #e8e0f5;
+      padding: 4px;
+      margin-bottom: 0.5rem;
+      line-height: 1.5;
+    }
+
+    .b-pull {
+      background: #ff2fa0;
+      color: #fff;
+      font-family: 'Comic Sans MS', cursive;
+      font-size: 0.85rem;
+      border: 3px solid #ffb700;
+      padding: 8px;
+      text-align: center;
+      margin: 0.65rem 0;
+    }
+
+    /* Callout below comparison */
+    .compare-callout {
+      padding: 1rem 1.25rem;
+      background: var(--cream);
+      border: 1px solid var(--border-fine);
+      font-size: 0.83rem;
+      color: var(--ink-light);
+      line-height: 1.65;
+      margin-bottom: 3rem;
+    }
+
+    .compare-callout strong { color: var(--ink); font-family: var(--font-display); font-size: 0.95rem; }
+
+    /* ─────────────────────────────────────────────
+       DEMO 3: ANNOTATION LAYER
+       CSS-only: uses :hover on desktop and :focus on
+       touch devices to reveal tooltip-style annotations.
+       Each .ann element has tabindex="0" so it can receive
+       focus when tapped on a touch device.
+       At small breakpoints, annotations become always-visible.
+    ───────────────────────────────────────────── */
+
+    .annotated-page {
+      border: 1px solid var(--border-fine);
+      background: var(--paper);
+      margin-bottom: 3rem;
+    }
+
+    .ann-header {
+      background: #1e1e1e;
+      color: #c8a86a;
+      padding: 0.65rem 1.25rem;
+      font-size: 0.75rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      font-family: var(--font-body);
+    }
+
+    .ann-body { padding: 1.5rem; }
+
+    /* Each annotated element */
+    .ann {
+      position: relative;
+      cursor: pointer;
+      border-radius: 1px;
+      transition: outline 0.1s;
+      outline: none;
+    }
+
+    .ann:hover,
+    .ann:focus,
+    .ann:focus-within {
+      outline: 2px solid #c8a86a;
+      outline-offset: 3px;
+    }
+
+    /* Floating label — visible on hover or focus */
+    .ann-label {
+      display: none;
+      position: absolute;
+      top: 0;
+      right: 0;
+      background: #1e1e1e;
+      color: #c8a86a;
+      font-family: var(--font-mono);
+      font-size: 0.62rem;
+      padding: 2px 7px;
+      letter-spacing: 0.04em;
+      white-space: nowrap;
+      z-index: 20;
+      pointer-events: none;
+    }
+
+    .ann:hover .ann-label,
+    .ann:focus .ann-label,
+    .ann:focus-within .ann-label { display: block; }
+
+    /* Tooltip panel */
+    .ann-tip {
+      display: none;
+      position: absolute;
+      left: 0;
+      top: calc(100% + 6px);
+      background: #1e1e1e;
+      color: #e8e2d9;
+      font-family: var(--font-body);
+      font-size: 0.75rem;
+      line-height: 1.55;
+      padding: 0.75rem 1rem;
+      width: 290px;
+      z-index: 100;
+      border-left: 3px solid #c8a86a;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.35);
+    }
+
+    .ann-tip strong {
+      color: #c8a86a;
+      display: block;
+      margin-bottom: 0.3rem;
+      font-size: 0.78rem;
+    }
+
+    .ann-tip a {
+      color: #c8a86a !important;
+      text-decoration: underline;
+      text-underline-offset: 2px;
+    }
+
+    .ann:hover .ann-tip,
+    .ann:focus .ann-tip,
+    .ann:focus-within .ann-tip { display: block; }
+
+    /* Hint for touch users */
+    .ann-touch-hint {
+      display: none;
+      font-size: 0.72rem;
+      color: var(--ink-light);
+      font-style: italic;
+      padding: 0.5rem 1.5rem 0;
+    }
+
+    @media (hover: none) {
+      .ann-touch-hint { display: block; }
+      .ann::after {
+        content: "tap";
+        position: absolute;
+        top: 4px;
+        right: 4px;
+        background: rgba(200, 168, 106, 0.9);
+        color: #1e1e1e;
+        font-family: var(--font-mono);
+        font-size: 0.55rem;
+        padding: 1px 5px;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+        pointer-events: none;
+      }
+      .ann:focus::after,
+      .ann:focus-within::after { display: none; }
+    }
+
+    /* Mockup nav inside annotation demo */
+    .mk-nav {
+      background: var(--accent);
+      margin: -1.5rem -1.5rem 1.1rem;
+      padding: 0.45rem 0.9rem;
+      display: flex;
+      flex-wrap: wrap;
+    }
+
+    .mk-nav span {
+      color: #faeaea;
+      font-size: 0.65rem;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+      padding: 0.35rem 0.6rem;
+    }
+
+    .mk-nav span.mk-on { background: rgba(0,0,0,0.25); color: #fff; }
+
+    .mk-bc {
+      font-size: 0.7rem;
+      color: var(--ink-light);
+      margin-bottom: 0.9rem;
+      padding-bottom: 0.4rem;
+      border-bottom: 1px solid var(--border-fine);
+    }
+
+    .mk-bc strong { color: var(--accent); }
+
+    .mk-section-label {
+      font-size: 0.65rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--ink-light);
+      margin-bottom: 0.35rem;
+    }
+
+    .mk-h1 {
+      font-family: var(--font-display);
+      font-size: 1.15rem;
+      font-weight: 700;
+      line-height: 1.2;
+      margin-bottom: 0.65rem;
+    }
+
+    .mk-lede {
+      border-left: 3px solid var(--accent);
+      padding-left: 0.85rem;
+      font-size: 0.82rem;
+      margin-bottom: 0.9rem;
+      line-height: 1.6;
+    }
+
+    .mk-pull {
+      float: right;
+      width: 40%;
+      margin: 0 0 0.65rem 0.85rem;
+      padding: 0.6rem 0.75rem;
+      background: var(--pull-bg);
+      border-left: 3px solid var(--accent);
+      font-family: var(--font-display);
+      font-size: 0.78rem;
+      font-style: italic;
+      line-height: 1.45;
+    }
+
+    .mk-pull cite {
+      display: block;
+      font-family: var(--font-body);
+      font-size: 0.62rem;
+      font-style: normal;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--ink-light);
+      margin-top: 0.3rem;
+    }
+
+    .mk-p { font-size: 0.8rem; margin-bottom: 0.6rem; line-height: 1.6; }
+
+    .mk-sidebar { float: right; width: 200px; margin-left: 1.5rem; padding-left: 1.25rem; border-left: 1px solid var(--border-fine); }
+
+    .mk-sidebar-h {
+      font-size: 0.65rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--ink-light);
+      margin-bottom: 0.5rem;
+      border-bottom: 1px solid var(--border-fine);
+      padding-bottom: 0.3rem;
+    }
+
+    .mk-sidebar a {
+      font-size: 0.75rem;
+      color: var(--ink-light);
+      display: block;
+      margin-bottom: 0.3rem;
+      text-decoration: none;
+    }
+
+    .mk-term {
+      font-size: 0.72rem;
+      background: var(--cream);
+      border: 1px solid var(--border-fine);
+      padding: 0.4rem 0.6rem;
+      margin-bottom: 0.4rem;
+    }
+
+    .mk-term strong {
+      display: block;
+      font-size: 0.62rem;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 0.15rem;
+    }
+
+    /* ── Score card ── */
+    .score-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+      margin-bottom: 3rem;
+    }
+
+    .score-col h3 {
+      font-family: var(--font-display);
+      font-size: 1rem;
+      font-weight: 600;
+      font-style: normal;
+      padding: 0.55rem 1rem;
+      margin: 0 0 1rem;
+    }
+
+    .score-col.good h3 { background: #e8f0e8; color: #2a5a2a; border-left: 3px solid #2a5a2a; }
+    .score-col.bad  h3 { background: #f0e0e0; color: #7a1a1a; border-left: 3px solid #7a1a1a; }
+
+    .score-item {
+      display: flex;
+      gap: 0.75rem;
+      align-items: flex-start;
+      margin-bottom: 0.9rem;
+      font-size: 0.82rem;
+      line-height: 1.5;
+    }
+
+    .score-item .icon {
+      flex-shrink: 0;
+      font-size: 1rem;
+      width: 1.4rem;
+      text-align: center;
+      line-height: 1.5;
+      margin-top: 1px;
+    }
+    .score-item .label { color: var(--ink); font-weight: 600; }
+    .score-item .sub   { font-size: 0.75rem; color: var(--ink-light); }
+
+    .thesis-box {
+      padding: 1.25rem 1.5rem;
+      background: var(--cream);
+      border-left: 3px solid var(--accent);
+      font-size: 0.88rem;
+      color: var(--ink);
+      line-height: 1.75;
+      margin-bottom: 4rem;
+    }
+
+    .thesis-box strong {
+      font-family: var(--font-display);
+      font-size: 1rem;
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 720px) {
+      .demo-cards     { grid-template-columns: 1fr; }
+      .compare-grid   { grid-template-columns: 1fr; }
+      .pane-good      { border-right: none; border-bottom: 1px solid var(--border-fine); }
+      .score-grid     { grid-template-columns: 1fr; }
+      .ann-tip        { width: 220px; }
+      .mk-sidebar     { float: none; width: auto; margin-left: 0; border-left: none; border-top: 1px solid var(--border-fine); padding-left: 0; padding-top: 1rem; margin-top: 1rem; }
+      .g-pull, .mk-pull { float: none; width: 100%; margin: 0.75rem 0; }
+    }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+
+  <header id="site-header">
+    <div class="header-inner">
+      <a class="site-title" href="index.html">Information Architecture as Rhetorical Practice</a>
+      <p class="site-subtitle">In Web-Based Knowledge Systems</p>
+    </div>
+  </header>
+
+  <nav id="main-nav" aria-label="Main navigation">
+    <ul>
+      <li><a href="index.html">Home</a></li>
+      <li><a href="ia-and-rhetoric.html">IA &amp; Rhetoric</a></li>
+      <li><a href="knowledge-codification.html">Codification</a></li>
+      <li><a href="structural-models.html">Structure</a></li>
+      <li><a href="usability-trust.html">Usability</a></li>
+      <li><a href="ia-demo.html" class="active">In Practice</a></li>
+      <li><a href="glossary.html">Glossary</a></li>
+      <li><a href="works-cited.html">References</a></li>
+    </ul>
+  </nav>
+
+  <nav class="breadcrumbs" aria-label="Breadcrumb">
+    <a href="index.html">Home</a> &rsaquo; <span>IA in Practice</span>
+  </nav>
+
+  <main id="main-content">
+
+  <!-- ── INTRO ── -->
+  <div class="demo-intro">
+    <div class="demo-intro-inner">
+      <h1>IA in Practice: Experience the Difference</h1>
+      <p>This page does not just argue that information architecture is rhetorical &mdash; it <strong>demonstrates it</strong>. Below are three experiences that let you feel the difference between structural decisions that construct meaning and those that destroy it.</p>
+    </div>
+  </div>
+
+  <!-- ── DEMO CARDS ── -->
+  <div class="demo-cards">
+
+    <div class="demo-card">
+      <div class="demo-card-header">
+        <div class="demo-card-label">Demo 1 &mdash; Navigate It</div>
+        <h3>The Broken Site</h3>
+      </div>
+      <div class="demo-card-body">
+        <p>Visit a deliberately broken information architecture. Every violation (flat heading hierarchy, vague section numbers, unattributed pull quotes floated the wrong direction) is intentional and corresponds to a finding in the research.</p>
+        <p>Try to find the actual argument of the paper. How long before you give up?</p>
+      </div>
+      <div class="demo-card-footer">
+        <a href="bad-ia.html" class="demo-btn demo-btn-dark">Enter the Broken Site &rarr;</a>
+      </div>
+    </div>
+
+    <div class="demo-card">
+      <div class="demo-card-header">
+        <div class="demo-card-label">Demo 2 &mdash; Compare It</div>
+        <h3>Side-by-Side</h3>
+      </div>
+      <div class="demo-card-body">
+        <p>The same content rendered in two information architectures. The words are identical. The ability to interpret them is not. Scroll down to see the comparison.</p>
+        <p>Notice which version lets you understand the argument on first read, and which requires effort just to decode the structure.</p>
+      </div>
+      <div class="demo-card-footer">
+        <a href="#compare" class="demo-btn">See the Comparison &darr;</a>
+      </div>
+    </div>
+
+    <div class="demo-card">
+      <div class="demo-card-header">
+        <div class="demo-card-label">Demo 3 &mdash; Decode It</div>
+        <h3>Annotated IA</h3>
+      </div>
+      <div class="demo-card-body">
+        <p>Hover over any element in the annotated page mockup below to reveal the rhetorical decision it enacts, and which appeal (logos, ethos, pathos) it serves.</p>
+        <p>This makes visible the argument that every structural element is doing interpretive work.</p>
+      </div>
+      <div class="demo-card-footer">
+        <a href="#annotate" class="demo-btn">See the Annotations &darr;</a>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ── DEMO 2: SIDE-BY-SIDE ── -->
+  <div class="demo-section" id="compare">
+    <h2>Demo 2: Side-by-Side Comparison</h2>
+    <p>The same excerpt rendered in two different information architectures. The content is identical. Read both and notice what changes.</p>
+
+    <div class="compare-grid">
+
+      <!-- GOOD PANE -->
+      <div class="pane-good">
+        <div class="pane-label">&#10003; Good Information Architecture</div>
+        <div class="pane-body">
+
+          <div class="g-nav">
+            <span>Home</span>
+            <span class="on">IA &amp; Rhetoric</span>
+            <span>Codification</span>
+            <span>Structure</span>
+            <span>Usability</span>
+          </div>
+
+          <div class="g-bc"><a style="color:var(--ink-light);">Home</a> &rsaquo; <strong>IA &amp; Rhetoric</strong></div>
+
+          <p class="g-label">Part One</p>
+          <p class="g-h1">Information Architecture as Rhetorical Practice</p>
+
+          <p class="g-lede">Every structural decision in a knowledge system is an act of meaning-making, not merely of organization.</p>
+
+          <div class="g-pull">
+            &ldquo;No label or definition totally captures the meaning of a document.&rdquo;
+            <cite>&mdash; Rosenfeld, Morville &amp; Arango</cite>
+          </div>
+
+          <p class="g-p">Rosenfeld, Morville, and Arango define <a href="glossary.html#information-architecture" style="color:var(--accent);">information architecture</a> as &ldquo;the art and science of shaping information products and experiences.&rdquo; Their key observation: information lives in the &ldquo;messy middle&rdquo; and requires a receiver to make sense of it.</p>
+
+          <p class="g-p">If no label fully captures what a document means, then every structural decision becomes an act of meaning-making. <strong>Structure precedes meaning.</strong></p>
+
+        </div>
+      </div>
+
+      <!-- BAD PANE — mirrors bad-ia.html structurally, scaled to fit the grid -->
+      <div class="pane-bad">
+        <div class="pane-label">&#10007; Bad Information Architecture</div>
+        <div class="pane-body">
+
+          <!-- Site header bar (same as good site — same fonts, same colors) -->
+          <div style="background:#1e1e1e;margin:-1.25rem -1.25rem 0;padding:0.7rem 0.85rem;">
+            <span style="font-family:var(--font-display);font-size:0.85rem;font-weight:700;color:#fff;">Information Architecture Website</span>
+          </div>
+
+          <!-- Mahogany nav bar — vertical stack, meaningless dead labels -->
+          <div style="background:var(--accent);margin:0 -1.25rem 0.85rem;padding:0.4rem 0.85rem;display:flex;flex-direction:column;">
+            <a href="#" style="color:rgba(255,255,255,0.72);font-size:0.6rem;letter-spacing:0.05em;text-transform:uppercase;padding:0.15rem 0;text-decoration:none;">Section 1.1</a>
+            <a href="#" style="color:rgba(255,255,255,0.72);font-size:0.6rem;letter-spacing:0.05em;text-transform:uppercase;padding:0.15rem 0;text-decoration:none;">Section 0</a>
+            <a href="#" style="color:rgba(255,255,255,0.72);font-size:0.6rem;letter-spacing:0.05em;text-transform:uppercase;padding:0.15rem 0;text-decoration:none;">Section 2</a>
+            <a href="#" style="color:rgba(255,255,255,0.72);font-size:0.6rem;letter-spacing:0.05em;text-transform:uppercase;padding:0.15rem 0;text-decoration:none;">Click here for terms</a>
+          </div>
+
+          <!-- Pull quote floated left, nearly full width, no citation -->
+          <div style="float:left;width:90%;margin:0.25rem 0.5rem 0.5rem 0;padding:0.45rem 0.7rem;background:var(--pull-bg);font-family:var(--font-display);font-style:italic;font-size:0.7rem;line-height:1.45;">
+            &ldquo;No label or definition totally captures the meaning of a document.&rdquo;
+          </div>
+          <div style="clear:both;"></div>
+
+          <!-- Headings indistinguishable from paragraph text -->
+          <p style="font-family:var(--font-body);font-size:0.72rem;font-weight:300;color:var(--ink);margin:0;line-height:1.55;">Overview</p>
+          <p style="font-family:var(--font-body);font-size:0.72rem;font-weight:300;color:var(--ink);margin:0;line-height:1.55;">The Instability of Information</p>
+
+          <p style="font-family:var(--font-body);font-size:0.72rem;font-weight:300;line-height:1.55;color:var(--ink);margin:0 0 0.3rem;">Rosenfeld, Morville, and Arango define information architecture as &ldquo;the art and science of shaping information products and experiences.&rdquo; Information lives in the &ldquo;messy middle&rdquo; &mdash; it requires a receiver to make sense of it. If no label fully captures what a document means, then every structural decision becomes an act of meaning-making. <strong>Structure precedes meaning.</strong></p>
+
+          <!-- "Click here" link, no embedded prose link -->
+          <p style="font-family:var(--font-body);font-size:0.72rem;font-weight:300;line-height:1.55;color:var(--ink);margin:0 0 0.4rem;">For more information about the design implications, <a href="#" style="color:var(--accent);">click here</a> to continue reading.</p>
+
+          <!-- Citations buried with no heading or separator -->
+          <p style="font-family:var(--font-body);font-size:0.7rem;font-weight:300;line-height:1.5;color:var(--ink);margin:0;">Rosenfeld, L., Morville, P., &amp; Arango, J. <em>Information Architecture for the Web.</em> O&rsquo;Reilly, 2015. Salvo, M. &ldquo;Rhetorical Action in Professional Space.&rdquo; <em>JBTC,</em> 2004.</p>
+
+        </div>
+      </div>
+
+    </div><!-- /compare-grid -->
+
+    <div class="compare-callout">
+      <strong>What you are seeing:</strong> Both panes use the same fonts and the same color palette &mdash; the only thing that differs is the structural decisions. The good version uses a horizontal nav bar with descriptive labels, breadcrumbs, a section label, a clear heading hierarchy, a pull quote floated right with attribution, and embedded prose links. The bad version uses dead vertical nav links labeled Section 0, Section 1.1, Section 2; no breadcrumbs; headings indistinguishable from paragraph text; a nearly full-width pull quote floated left before its context with no citation; a &ldquo;click here&rdquo; link; and citations buried in a single line at the bottom with no heading. The content is identical. The <em>ability to interpret it</em> is not.
+    </div>
+
+  </div>
+
+  <!-- ── DEMO 3: ANNOTATIONS ── -->
+  <div class="demo-section" id="annotate">
+    <h2>Demo 3: Annotated Information Architecture</h2>
+    <p>Hover (or tap, on touch devices) over any highlighted element in the mockup below to reveal the rhetorical decision it enacts. Each annotation names the appeal it serves &mdash; logos, ethos, or pathos &mdash; and connects it to a claim in the research.</p>
+
+    <div class="annotated-page">
+
+      <div class="ann-header">
+        Hover or tap any element to reveal its rhetorical annotation
+      </div>
+
+      <div class="ann-body">
+
+        <!-- NAV annotation -->
+        <div class="ann" tabindex="0" aria-label="Annotation. Navigation bar. Ethos — Consistent navigation" style="position:relative;margin-bottom:0;">
+          <div class="ann-label">Rhetorical element: Navigation bar</div>
+          <div class="ann-tip">
+            <strong>Ethos &mdash; Consistent navigation</strong>
+            Every page carries the same nav bar in the same order. Consistency is a form of ethos: it signals the system is coherent and trustworthy. Salvo argues IA constructs &ldquo;the conditions under which users engage.&rdquo; A nav that never changes proves the system will behave the same way every time.
+          </div>
+          <div class="mk-nav">
+            <span>Home</span>
+            <span class="mk-on">IA &amp; Rhetoric</span>
+            <span>Codification</span>
+            <span>Structure</span>
+            <span>Usability</span>
+            <span>Glossary</span>
+            <span>References</span>
+          </div>
+        </div>
+
+        <!-- BREADCRUMBS annotation -->
+        <div class="ann" tabindex="0" aria-label="Annotation. Breadcrumb trail. Pathos — Location cues reduce anxiety" style="position:relative;margin-bottom:1rem;">
+          <div class="ann-label">Rhetorical element: Breadcrumb trail</div>
+          <div class="ann-tip">
+            <strong>Pathos &mdash; Location cues reduce anxiety</strong>
+            &ldquo;Home &rsaquo; IA &amp; Rhetoric&rdquo; tells users exactly where they are. Matloobtalab and Ferati&rsquo;s participants described the absence of this as: &ldquo;You do not get any clues in the interface.&rdquo; Structural clarity is an affective intervention. Knowing where you are is calming; not knowing is destabilizing.
+          </div>
+          <div class="mk-bc"><a style="color:var(--ink-light);">Home</a> &rsaquo; <strong>IA &amp; Rhetoric</strong></div>
+        </div>
+
+        <!-- SECTION LABEL annotation -->
+        <div class="ann" tabindex="0" aria-label="Annotation. Section label. Logos — Establishing sequence" style="position:relative;margin-bottom:0.4rem;">
+          <div class="ann-label">Rhetorical element: Section label</div>
+          <div class="ann-tip">
+            <strong>Logos &mdash; Establishing sequence</strong>
+            &ldquo;Part One&rdquo; signals position in a larger argument before the reader has seen any content. This is logos in structural form: hierarchy implies order, and order implies logic. The label constructs a sense of reasoned progression before the argument has even begun.
+          </div>
+          <p class="mk-section-label">Part One</p>
+        </div>
+
+        <!-- H1 annotation -->
+        <div class="ann" tabindex="0" aria-label="Annotation. Page heading (H1). Logos + Ethos — Specific, committed labeling" style="position:relative;margin-bottom:0.7rem;">
+          <div class="ann-label">Rhetorical element: Page heading (H1)</div>
+          <div class="ann-tip">
+            <strong>Logos + Ethos &mdash; Specific, committed labeling</strong>
+            Rosenfeld et al. observe that &ldquo;no label totally captures the meaning of a document,&rdquo; yet labels must be chosen. This heading is specific (&ldquo;as Rhetorical Practice&rdquo;), not generic (&ldquo;Overview&rdquo;). Specificity signals a deliberate interpretive commitment and invites the reader to evaluate the argument rather than guess at it.
+          </div>
+          <p class="mk-h1">Information Architecture as Rhetorical Practice</p>
+        </div>
+
+        <!-- LEDE annotation -->
+        <div class="ann" tabindex="0" aria-label="Annotation. Lede paragraph. Logos + Pathos — Redish's layering" style="position:relative;margin-bottom:1rem;">
+          <div class="ann-label">Rhetorical element: Lede paragraph</div>
+          <div class="ann-tip">
+            <strong>Logos + Pathos &mdash; Redish&rsquo;s layering</strong>
+            The lede gives readers enough to orient before committing to the full section, which is consistent with Redish&rsquo;s principle of layering. The border-left accent visually marks it as entry-point content, not body text. The structural cue manages reader attention: it says &ldquo;start here, go deeper.&rdquo; The design is doing rhetorical work.
+          </div>
+          <p class="mk-lede">Every structural decision in a knowledge system is an act of meaning-making, not merely of organization.</p>
+        </div>
+
+        <!-- PULL QUOTE annotation -->
+        <div class="ann" tabindex="0" aria-label="Annotation. Pull quote. Ethos + Logos — Attributed authority, floated for emphasis" style="position:relative;">
+          <div class="ann-label">Rhetorical element: Pull quote</div>
+          <div class="ann-tip">
+            <strong>Ethos + Logos &mdash; Attributed authority, floated for emphasis</strong>
+            The pull quote does two things: it attributes a claim to a named authority (ethos through citation), and its float-right position means the reader encounters it mid-prose, creating a visual argument where the text and quote reinforce each other simultaneously. Position is part of the argument.
+          </div>
+          <div class="mk-pull">
+            &ldquo;No label or definition totally captures the meaning of a document.&rdquo;
+            <cite>&mdash; Rosenfeld, Morville &amp; Arango</cite>
+          </div>
+        </div>
+
+        <!-- BODY TEXT annotation -->
+        <div class="ann" tabindex="0" aria-label="Annotation. Body prose with embedded link. Logos — Embedded links vs. "click here"" style="position:relative;">
+          <div class="ann-label">Rhetorical element: Body prose with embedded link</div>
+          <div class="ann-tip">
+            <strong>Logos &mdash; Embedded links vs. &ldquo;click here&rdquo;</strong>
+            The link text reads &ldquo;<a href="glossary.html#information-architecture" style="color:var(--accent);font-size:inherit;">information architecture</a>,&rdquo; not &ldquo;click here.&rdquo; This signals that the term has a definition worth consulting without interrupting the argumentative flow. Navigation is embedded in the prose logic, not appended to it.
+          </div>
+          <p class="mk-p">Rosenfeld, Morville, and Arango define <a href="glossary.html#information-architecture" style="color:var(--accent);">information architecture</a> as &ldquo;the art and science of shaping information products and experiences.&rdquo; Information lives in the &ldquo;messy middle&rdquo; &mdash; it requires a receiver to make sense of it. <strong>Structure precedes meaning.</strong></p>
+        </div>
+
+        <div style="clear:both;"></div>
+
+        <!-- SIDEBAR annotation -->
+        <div class="ann" tabindex="0" aria-label="Annotation. Sidebar key terms. Logos — Taxonomy before technology" style="position:relative;margin-top:1rem;">
+          <div class="ann-label">Rhetorical element: Sidebar key terms</div>
+          <div class="ann-tip">
+            <strong>Logos &mdash; Taxonomy before technology</strong>
+            Dalkir&rsquo;s principle &ldquo;taxonomy before technology&rdquo; holds that conceptual structure precedes tools. The sidebar key terms panel instantiates this: it provides interpretive vocabulary before (or while) the reader encounters the argument. Terms link to the glossary. This is IA as proactive knowledge support, not reactive labeling.
+          </div>
+          <div class="mk-sidebar" style="float:none;width:auto;border-left:none;border-top:1px solid var(--border-fine);padding-top:1rem;margin-top:0;">
+            <div class="mk-sidebar-h">Key Terms</div>
+            <div class="mk-term">
+              <strong>Information Architecture</strong>
+              The art and science of shaping information products to support usability and understanding.
+            </div>
+            <div class="mk-term">
+              <strong>Rhetorical Practice</strong>
+              Design choices that shape the conditions under which knowledge is encountered.
+            </div>
+          </div>
+        </div>
+
+      </div><!-- /ann-body -->
+    </div><!-- /annotated-page -->
+
+  </div>
+
+  <!-- ── SCORE CARD ── -->
+  <div class="demo-section">
+    <h2>What the Research Predicts &mdash; and What You Experienced</h2>
+    <p>Every failure in the bad-IA site corresponds to a finding in the research. Every success in the good site enacts a rhetorical principle from the scholarship.</p>
+
+    <div class="score-grid">
+
+      <div class="score-col good">
+        <h3>&#10003; Good IA &mdash; What Works and Why</h3>
+
+        <div class="score-item">
+          <span class="icon">&#129517;</span>
+          <div>
+            <div class="label">Breadcrumbs on every page</div>
+            <div class="sub">Prevents the disorientation Matloobtalab &amp; Ferati found: &ldquo;You do not get any clues in the interface.&rdquo;</div>
+          </div>
+        </div>
+
+        <div class="score-item">
+          <span class="icon">&#128205;</span>
+          <div>
+            <div class="label">Live table of contents tracks reader position</div>
+            <div class="sub">The &ldquo;On this page&rdquo; sidebar highlights the section you are currently reading as you scroll. The system reports your location continuously rather than only at page-load. This is the transparency Matloobtalab&rsquo;s failed portal lacked, and it constructs ethos through visible care.</div>
+          </div>
+        </div>
+
+        <div class="score-item">
+          <span class="icon">&#128208;</span>
+          <div>
+            <div class="label">Consistent heading hierarchy</div>
+            <div class="sub">Encodes logos: H1 &rarr; H2 &rarr; H3 creates an interpretive sequence users can trust without thinking about it.</div>
+          </div>
+        </div>
+
+        <div class="score-item">
+          <span class="icon">&#128279;</span>
+          <div>
+            <div class="label">Embedded prose links</div>
+            <div class="sub">&ldquo;Information architecture&rdquo; rather than &ldquo;click here&rdquo; preserves argumentative flow while signaling definitional depth.</div>
+          </div>
+        </div>
+
+        <div class="score-item">
+          <span class="icon">&#128218;</span>
+          <div>
+            <div class="label">Attributed pull quotes</div>
+            <div class="sub">Each pull quote names its source &mdash; constructing ethos through citation, not decoration.</div>
+          </div>
+        </div>
+
+        <div class="score-item">
+          <span class="icon">&#127963;</span>
+          <div>
+            <div class="label">Glossary linked from prose</div>
+            <div class="sub">Follows Dalkir&rsquo;s &ldquo;taxonomy before technology&rdquo; &mdash; the interpretive vocabulary is provided before the reader needs it.</div>
+          </div>
+        </div>
+
+        <div class="score-item">
+          <span class="icon">&#128208;</span>
+          <div>
+            <div class="label">Constrained measure for readability</div>
+            <div class="sub">A 960px max-width and a sidebar narrow the reading column to roughly 60&ndash;65 characters per line &mdash; squarely inside Bringhurst&rsquo;s 45&ndash;75 character optimum. The eye returns cleanly. Comprehension stays intact.</div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="score-col bad">
+        <h3>&#10007; Bad IA &mdash; What Fails and Why</h3>
+
+        <div class="score-item">
+          <span class="icon">&#128260;</span>
+          <div>
+            <div class="label">No breadcrumbs anywhere</div>
+            <div class="sub">The reader has no location cue on any page. There is no way to know where you are in the site without using the browser&rsquo;s back button.</div>
+          </div>
+        </div>
+
+        <div class="score-item">
+          <span class="icon">&#128259;</span>
+          <div>
+            <div class="label">Headings indistinguishable from body text</div>
+            <div class="sub">H1, H2, and H3 render at the same size and weight as paragraphs. Sighted readers cannot tell at a glance where a section starts. The argument&rsquo;s structure exists in the markup but is invisible on the page.</div>
+          </div>
+        </div>
+
+        <div class="score-item">
+          <span class="icon">&#10067;</span>
+          <div>
+            <div class="label">Dead nav with meaningless labels</div>
+            <div class="sub">Navigation links stack vertically and are labeled Section 1.1, Section 0, Section 2 — giving no indication of content or sequence. And every link is dead. The nav looks navigable but goes nowhere.</div>
+          </div>
+        </div>
+
+        <div class="score-item">
+          <span class="icon">&#128202;</span>
+          <div>
+            <div class="label">Oversized pull quote with no citation</div>
+            <div class="sub">The pull quote runs nearly full width and appears before the text it quotes. Two of three have no attribution — the reader cannot evaluate the claim.</div>
+          </div>
+        </div>
+
+        <div class="score-item">
+          <span class="icon">&#128682;</span>
+          <div>
+            <div class="label">References buried with no heading</div>
+            <div class="sub">Citations appear at the bottom with no section break or hanging indents, blending into body text and nearly invisible to the reader.</div>
+          </div>
+        </div>
+
+        <div class="score-item">
+          <span class="icon">&#128208;</span>
+          <div>
+            <div class="label">No measure constraint &mdash; lines stretch edge-to-edge</div>
+            <div class="sub">No max-width on the body. At any modern desktop viewport, the line length runs 150&ndash;200+ characters, well past Bringhurst&rsquo;s 45&ndash;75 character optimum. Return-sweep slows. The eye loses its place between lines.</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="thesis-box">
+      <strong>The thesis, enacted:</strong> You have just experienced what this paper argues. The good site constructed conditions under which knowledge could be encountered and trusted. The bad site dismantled those conditions. The content was never the variable. The <em>structure</em> was.
+    </div>
+
+  </div>
+
+
+  </main>
+
+  <div class="page-pagination-wrap">
+    <div class="article-pagination">
+      <a class="pagination-prev" href="usability-trust.html">
+        <span class="pagination-direction">&larr; Previous &middot; Part Four</span>
+        <span class="pagination-title">Usability &amp; Trust</span>
+      </a>
+      <a class="pagination-next" href="glossary.html">
+        <span class="pagination-direction">Next &middot; Reference &rarr;</span>
+        <span class="pagination-title">Glossary of Key Terms</span>
+      </a>
+    </div>
+  </div>
+
+  <footer>
+    <p>Information Architecture as Rhetorical Practice in Web-Based Knowledge Systems</p>
+    <p>Holly Melone &nbsp;&middot;&nbsp; &copy; 2025 &nbsp;&middot;&nbsp; All rights reserved</p>
+  </footer>
+
+</body>
+</html>
