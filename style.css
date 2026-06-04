@@ -225,6 +225,12 @@ main p { margin-bottom: 1.25rem; }
 
 main p:last-child { margin-bottom: 0; }
 
+/* When a paragraph follows a .clearfix wrapper (which contains a
+   floated figure), the clearfix's table-display ::after can swallow
+   the previous paragraph's bottom margin, making the next paragraph
+   look glued to the one above. Restore explicit top breathing room. */
+main .clearfix + p { margin-top: 1.25rem; }
+
 /* ── Intro / Lede ── */
 .lede {
   font-size: 1.08rem;
@@ -733,4 +739,313 @@ hr.rule {
 
   main h1 { font-size: 1.7rem; }
   #main-nav ul { padding: 0 0.75rem; }
+}
+
+/* ============================================================
+   MOBILE STICKY TOC — appears below masthead at ≤720px.
+   Injected by scroll-spy.js when a .toc exists on the page.
+   Collapsed: a thin bar showing "On this page · [current section] ▾"
+   Expanded:  a full panel listing every section, current highlighted.
+   Desktop: never appears (display: none above the breakpoint).
+   ============================================================ */
+.toc-mobile { display: none; }
+
+@media (max-width: 720px) {
+  /* Hide the desktop TOC entirely on mobile; the sticky version replaces it. */
+  .sidebar > .toc { display: none; }
+
+  .toc-mobile {
+    display: block;
+    position: sticky;
+    top: 0;
+    z-index: 80;
+    background: var(--paper);
+    border-bottom: 1px solid var(--border-fine);
+    /* Small shadow so it lifts off content as user scrolls under it */
+    box-shadow: 0 1px 0 rgba(37, 0, 1, 0.04), 0 4px 12px rgba(37, 0, 1, 0.04);
+  }
+
+  /* The always-visible "trigger" bar */
+  .toc-mobile-trigger {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    width: 100%;
+    padding: 0.75rem 1rem;
+    background: transparent;
+    border: 0;
+    text-align: left;
+    font-family: 'Source Serif 4', Georgia, serif;
+    font-size: 0.9rem;
+    line-height: 1.3;
+    color: var(--ink);
+    cursor: pointer;
+  }
+  .toc-mobile-trigger .toc-m-label {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 0.78rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--accent);
+    flex-shrink: 0;
+  }
+  .toc-mobile-trigger .toc-m-divider {
+    color: var(--border-fine);
+    flex-shrink: 0;
+  }
+  .toc-mobile-trigger .toc-m-current {
+    flex: 1;
+    color: var(--ink);
+    font-weight: 600;
+    /* Truncate if too long */
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .toc-mobile-trigger .toc-m-chevron {
+    flex-shrink: 0;
+    color: var(--accent);
+    font-size: 0.7rem;
+    transition: transform 0.2s ease;
+  }
+  .toc-mobile[aria-expanded="true"] .toc-m-chevron {
+    transform: rotate(180deg);
+  }
+
+  /* The expanded panel — slides down below the trigger */
+  .toc-mobile-panel {
+    display: none;
+    padding: 0.25rem 1rem 1rem;
+    border-top: 1px solid var(--border-fine);
+    background: var(--paper);
+    max-height: 60vh;
+    overflow-y: auto;
+  }
+  .toc-mobile[aria-expanded="true"] .toc-mobile-panel {
+    display: block;
+  }
+  .toc-mobile-panel ul {
+    list-style: none;
+    padding: 0;
+    margin: 0.5rem 0 0;
+  }
+  .toc-mobile-panel li {
+    margin: 0;
+  }
+  .toc-mobile-panel a {
+    display: block;
+    padding: 0.55rem 0.4rem 0.55rem 0.7rem;
+    font-family: 'Source Serif 4', Georgia, serif;
+    font-size: 0.95rem;
+    line-height: 1.35;
+    color: var(--ink);
+    text-decoration: none;
+    border-left: 3px solid transparent;
+    transition: background 0.15s, border-color 0.15s, color 0.15s;
+  }
+  .toc-mobile-panel a:hover,
+  .toc-mobile-panel a:focus-visible {
+    background: rgba(37, 0, 1, 0.04);
+    color: var(--accent);
+  }
+  /* The currently-read section, highlighted */
+  .toc-mobile-panel a.is-active {
+    border-left-color: var(--accent);
+    color: var(--accent);
+    font-weight: 600;
+    background: rgba(37, 0, 1, 0.03);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .toc-mobile-trigger .toc-m-chevron { transition: none; }
+}
+
+/* ============================================================
+   HOMEPAGE: lead pull-quote + argument map
+   ============================================================ */
+
+/* The homepage's opening flourish. The line that distills the
+   site's thesis into one sentence. Centered display italic, no
+   rule, so it doesn't double up on the .lede paragraph below
+   (which already carries the accent rule). Reads as the page's
+   first "moment" rather than a callout box. */
+.lede-pull {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 1.7rem;
+  font-style: italic;
+  font-weight: 400;
+  line-height: 1.32;
+  letter-spacing: -0.005em;
+  color: var(--accent);
+  max-width: 36ch;
+  margin: 1.5rem 0 2.75rem;
+}
+
+/* The four-part argument map, presented side-by-side with an
+   intro on the left and the cards on the right. Two columns at
+   desktop width, single column on mobile. */
+.argument-section {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.45fr);
+  gap: 2.5rem;
+  align-items: start;
+  margin: 2.25rem 0 2.5rem;
+}
+.argument-section .argument-intro {
+  position: sticky;
+  top: 1.5rem;
+}
+.argument-section .argument-intro h2 {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 1.65rem;
+  font-weight: 600;
+  font-style: normal;
+  line-height: 1.15;
+  margin: 0 0 0.75rem;
+  color: var(--ink);
+}
+.argument-section .argument-intro p {
+  font-size: 1rem;
+  line-height: 1.65;
+  color: var(--ink);
+  margin: 0;
+}
+
+.argument-map {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  counter-reset: argpt;
+  display: grid;
+  gap: 0.6rem;
+}
+.argument-map li {
+  counter-increment: argpt;
+  position: relative;
+  padding: 1rem 1.15rem 1rem 4rem;
+  background: var(--paper);
+  border: 1px solid var(--border-fine);
+  border-left: 3px solid var(--accent);
+  font-size: 0.94rem;
+  line-height: 1.55;
+  color: var(--ink);
+}
+.argument-map li::before {
+  content: counter(argpt, decimal-leading-zero);
+  position: absolute;
+  left: 1.15rem;
+  top: 0.95rem;
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 1.55rem;
+  font-weight: 600;
+  font-style: italic;
+  color: var(--accent);
+  line-height: 1;
+  letter-spacing: -0.02em;
+}
+.argument-map li strong {
+  display: block;
+  color: var(--ink);
+  font-family: 'Source Serif 4', Georgia, serif;
+  font-weight: 600;
+  font-size: 1rem;
+  margin-bottom: 0.25rem;
+}
+
+@media (max-width: 880px) {
+  .argument-section {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+  .argument-section .argument-intro {
+    position: static;
+  }
+}
+
+@media (max-width: 720px) {
+  .lede-pull {
+    font-size: 1.35rem;
+    margin: 1.25rem auto 2rem;
+  }
+  .argument-map li {
+    padding: 0.95rem 1rem 0.95rem 3.5rem;
+    font-size: 0.92rem;
+  }
+  .argument-map li::before {
+    left: 1rem;
+    top: 0.85rem;
+    font-size: 1.4rem;
+  }
+  .argument-map li strong {
+    font-size: 0.98rem;
+  }
+}
+
+/* ============================================================
+   DEMO PAGE: "Relates to" connector notes
+   Small text inside each demo card that ties the demo back to
+   the section of the paper it demonstrates.
+   ============================================================ */
+.demo-relates {
+  margin-top: 1rem;
+  padding-top: 0.65rem;
+  border-top: 1px solid var(--border-fine);
+  font-size: 0.85rem;
+  color: var(--ink);
+  line-height: 1.45;
+}
+.demo-relates strong {
+  color: var(--accent);
+  font-weight: 600;
+}
+
+/* ============================================================
+   GLOSSARY: "Why this matters" notes
+   Per-term one-sentence note tying the concept to the
+   site's argument.
+   ============================================================ */
+.why-matters {
+  margin-top: 0.85rem;
+  padding-top: 0.7rem;
+  border-top: 1px solid var(--border-fine);
+  font-size: 0.92rem;
+  line-height: 1.55;
+  color: var(--ink);
+}
+.why-matters strong {
+  color: var(--accent);
+  font-weight: 600;
+}
+
+/* ============================================================
+   REFERENCES: per-source notes
+   One-sentence description of what each source contributes
+   and where it appears in the site's argument.
+   ============================================================ */
+.citation-note {
+  display: block;
+  margin-top: 0.4rem;
+  margin-left: 1.25rem;
+  font-size: 0.88rem;
+  line-height: 1.55;
+  color: var(--ink-light);
+  font-style: italic;
+}
+
+/* Topic-card summary subhead - sits between the H3 and the body
+   description, presented as italic Playfair in accent color so it
+   reads as a tagline rather than running into the body prose. */
+.topic-card-summary {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 1rem;
+  font-style: italic;
+  font-weight: 500;
+  color: var(--accent);
+  margin: 0 0 0.5rem;
+  line-height: 1.3;
+}
+.topic-card-summary + p {
+  margin-top: 0;
 }

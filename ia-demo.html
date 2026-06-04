@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="An interactive demonstration of good versus bad information architecture — using only HTML and CSS.">
   <meta name="author" content="Holly Melone">
-  <meta name="copyright" content="Copyright 2025 Holly Melone. All rights reserved.">
+  <meta name="copyright" content="Copyright 2026 Holly Melone. All rights reserved.">
   <title>IA in Practice: Good vs. Bad — Information Architecture as Rhetorical Practice</title>
   <link rel="stylesheet" href="style.css">
   <style>
@@ -664,7 +664,7 @@
         <h3>The Broken Site</h3>
       </div>
       <div class="demo-card-body">
-        <p>Visit a deliberately broken information architecture. Every violation (flat heading hierarchy, vague section numbers, unattributed pull quotes floated the wrong direction) is intentional and corresponds to a finding in the research.</p>
+        <p>Visit a deliberately broken information architecture. Every design failure is intentional and corresponds to a finding discussed in the research.</p>
         <p>Try to find the actual argument of the paper. How long before you give up?</p>
       </div>
       <div class="demo-card-footer">
@@ -680,6 +680,7 @@
       <div class="demo-card-body">
         <p>The same content rendered in two information architectures. The words are identical. The ability to interpret them is not. Scroll down to see the comparison.</p>
         <p>Notice which version lets you understand the argument on first read, and which requires effort just to decode the structure.</p>
+        <p class="demo-relates"><strong>What this demonstrates:</strong> The same content can produce different interpretations when presented through different structures.</p>
       </div>
       <div class="demo-card-footer">
         <a href="#compare" class="demo-btn">See the Comparison &darr;</a>
@@ -694,6 +695,7 @@
       <div class="demo-card-body">
         <p>Hover over any element in the annotated page mockup below to reveal the rhetorical decision it enacts, and which appeal (logos, ethos, pathos) it serves.</p>
         <p>This makes visible the argument that every structural element is doing interpretive work.</p>
+        <p class="demo-relates"><strong>What this demonstrates:</strong> Structural elements perform rhetorical work even when users barely notice them.</p>
       </div>
       <div class="demo-card-footer">
         <a href="#annotate" class="demo-btn">See the Annotations &darr;</a>
@@ -769,7 +771,7 @@
           <p style="font-family:var(--font-body);font-size:0.72rem;font-weight:300;color:var(--ink);margin:0;line-height:1.55;">Overview</p>
           <p style="font-family:var(--font-body);font-size:0.72rem;font-weight:300;color:var(--ink);margin:0;line-height:1.55;">The Instability of Information</p>
 
-          <p style="font-family:var(--font-body);font-size:0.72rem;font-weight:300;line-height:1.55;color:var(--ink);margin:0 0 0.3rem;">Rosenfeld, Morville, and Arango define information architecture as &ldquo;the art and science of shaping information products and experiences.&rdquo; Information lives in the &ldquo;messy middle&rdquo; &mdash; it requires a receiver to make sense of it. If no label fully captures what a document means, then every structural decision becomes an act of meaning-making. <strong>Structure precedes meaning.</strong></p>
+          <p style="font-family:var(--font-body);font-size:0.72rem;font-weight:300;line-height:1.55;color:var(--ink);margin:0 0 0.3rem;">Rosenfeld, Morville, and Arango define information architecture as &ldquo;the art and science of shaping information products and experiences.&rdquo; Information lives in the &ldquo;messy middle&rdquo; that requires a receiver to make sense of it. If no label fully captures what a document means, then every structural decision becomes an act of meaning-making. <strong>Structure precedes meaning.</strong></p>
 
           <!-- "Click here" link, no embedded prose link -->
           <p style="font-family:var(--font-body);font-size:0.72rem;font-weight:300;line-height:1.55;color:var(--ink);margin:0 0 0.4rem;">For more information about the design implications, <a href="#" style="color:var(--accent);">click here</a> to continue reading.</p>
@@ -879,7 +881,7 @@
             <strong>Logos &mdash; Embedded links vs. &ldquo;click here&rdquo;</strong>
             The link text reads &ldquo;<a href="glossary.html#information-architecture" style="color:var(--accent);font-size:inherit;">information architecture</a>,&rdquo; not &ldquo;click here.&rdquo; This signals that the term has a definition worth consulting without interrupting the argumentative flow. Navigation is embedded in the prose logic, not appended to it.
           </div>
-          <p class="mk-p">Rosenfeld, Morville, and Arango define <a href="glossary.html#information-architecture" style="color:var(--accent);">information architecture</a> as &ldquo;the art and science of shaping information products and experiences.&rdquo; Information lives in the &ldquo;messy middle&rdquo; &mdash; it requires a receiver to make sense of it. <strong>Structure precedes meaning.</strong></p>
+          <p class="mk-p">Rosenfeld, Morville, and Arango define <a href="glossary.html#information-architecture" style="color:var(--accent);">information architecture</a> as &ldquo;the art and science of shaping information products and experiences.&rdquo; Information lives in the &ldquo;messy middle&rdquo; that requires a receiver to make sense of it. <strong>Structure precedes meaning.</strong></p>
         </div>
 
         <div style="clear:both;"></div>
@@ -931,7 +933,7 @@
           <span class="icon">&#128205;</span>
           <div>
             <div class="label">Live table of contents tracks reader position</div>
-            <div class="sub">The &ldquo;On this page&rdquo; sidebar highlights the section you are currently reading as you scroll. The system reports your location continuously rather than only at page-load. This is the transparency Matloobtalab&rsquo;s failed portal lacked, and it constructs ethos through visible care.</div>
+            <div class="sub">On each of the four argument pages, the &ldquo;On this page&rdquo; navigation highlights the section you are currently reading as you scroll. The system reports your location continuously rather than only at page-load. This is the transparency Matloobtalab&rsquo;s failed portal lacked, and it constructs ethos through visible care.</div>
           </div>
         </div>
 
@@ -1033,6 +1035,7 @@
 
     <div class="thesis-box">
       <strong>The thesis, enacted:</strong> You have just experienced what this paper argues. The good site constructed conditions under which knowledge could be encountered and trusted. The bad site dismantled those conditions. The content was never the variable. The <em>structure</em> was.
+      <p style="margin-top: 1rem; margin-bottom: 0;">These examples demonstrate that information architecture is not simply a method for organizing content. Structural decisions shape interpretation, guide attention, and influence trust. Together, the four parts of the argument and the demonstrations on this page make a single case: structure is not neutral, and the design of knowledge systems is therefore a form of rhetorical practice.</p>
     </div>
 
   </div>
