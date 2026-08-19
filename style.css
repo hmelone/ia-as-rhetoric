@@ -225,6 +225,27 @@ main p { margin-bottom: 1.25rem; }
 
 main p:last-child { margin-bottom: 0; }
 
+/* ── Article Content Lists ── */
+main .content-list {
+  margin: 0.5rem 0 1.5rem;
+  padding-left: 1.4rem;
+  list-style-position: outside;
+}
+
+main .content-list li {
+  margin-bottom: 0.35rem;
+  padding-left: 0.2rem;
+  line-height: 1.6;
+}
+
+main .content-list li:last-child {
+  margin-bottom: 0;
+}
+
+main .content-list li::marker {
+  font-size: 0.7em;
+}
+
 /* When a paragraph follows a .clearfix wrapper (which contains a
    floated figure), the clearfix's table-display ::after can swallow
    the previous paragraph's bottom margin, making the next paragraph
