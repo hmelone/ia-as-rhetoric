@@ -1,9 +1,10 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="How knowledge codification shapes what can be represented, organized, and understood in a web-based knowledge system.">
+  <meta name="description" content="How knowledge becomes representable content, what is lost through codification, and how those choices shape information architecture in web-based knowledge systems.">
   <meta name="author" content="Holly Melone">
   <meta name="copyright" content="© 2026. All rights reserved.">
   <title>Knowledge Codification | Information Architecture as Rhetorical Practice</title>
@@ -42,17 +43,56 @@
       <h1>Knowledge Codification and the Limits of Representation</h1>
 
       <p class="lede">
-        Before knowledge can be organized, searched, or retrieved, it has to be represented in a form the system can hold. Codification is the process of representing knowledge in a form that can be stored and shared. Because every representation is selective, codification is also where some of the rhetorical work of information architecture begins.
+        Before knowledge can be organized, searched, or retrieved, it has to be represented in a form the system can hold.
+        <a href="glossary.html#codification">Codification</a> is the process of representing knowledge in a form that can be stored and shared.
+        Because every representation is selective, codification is also where some of the rhetorical work of information architecture begins.
       </p>
+
+      <h2 id="information-to-knowledge">From Information to Knowledge</h2>
+
+      <div class="clearfix">
+        <figure class="float-right">
+          <img
+            src="images/information.png"
+            alt="Diagram showing raw data passing through a messy middle of insight, structure, and understanding to become actionable knowledge">
+          <figcaption>
+            Between raw data and usable knowledge is a process of interpretation. Structure and context help determine what information means and how it can be used.
+          </figcaption>
+        </figure>
+
+        <p>
+          Davenport and Prusak distinguish among data, information, and knowledge rather than treating the terms as interchangeable. Data records facts or events. Information gives those data context and relevance. Knowledge draws on information together with experience, judgment, values, and interpretation.
+        </p>
+
+        <p>
+          A repository can only work with representations of what people know: articles, records, fields, labels, examples, metadata, and relationships that preserve selected parts of that knowledge.
+        </p>
+
+        <p>
+          Moving from information to usable knowledge requires interpretation. Someone has to decide what matters, what context belongs with it, how it should be described, and what another person will need in order to make sense of it. Those decisions occur before a reader searches the system or follows its navigation.
+        </p>
+      </div>
 
       <h2 id="what-codification-does">What Codification Involves</h2>
 
       <p>
-        Davenport and Prusak describe codification as putting organizational knowledge into a form that is organized, explicit, portable, and understandable. In practice, that means deciding what belongs in the representation: which details matter, how much context is necessary, what terminology to use, and which relationships should be made explicit.
+        Davenport and Prusak describe codification as putting organizational knowledge into a form that is organized, explicit, portable, and understandable. Dalkir treats knowledge capture and codification as part of the knowledge management cycle, where knowledge is captured or elicited and organized so that it can be shared and used.
       </p>
 
       <p>
-        These are not simply writing decisions. They begin to establish the vocabulary and conceptual relationships that the rest of the knowledge system will use. What is preserved, omitted, named, or emphasized affects what later readers have available to interpret.
+        Codification requires decisions about how knowledge will be represented:
+      </p>
+
+      <ul>
+        <li>Which parts of the knowledge need to be preserved?</li>
+        <li>What context will another person need to understand it?</li>
+        <li>Which terminology best represents the problem or concept?</li>
+        <li>Which examples, exceptions, or relationships need to be made explicit?</li>
+        <li>What can be omitted without changing the meaning?</li>
+      </ul>
+
+      <p>
+        These decisions begin to establish the vocabulary, distinctions, and relationships that the larger knowledge system will use. A concept that is never named cannot easily become a label, metadata value, category, search signal, or relationship later.
       </p>
 
       <h2 id="the-tacitexplicit-distinction">Why Knowledge Resists Capture</h2>
@@ -65,45 +105,72 @@
             width="320"
             height="213">
           <figcaption>
-            The iceberg metaphor distinguishes explicit knowledge that can be recorded from tacit knowledge rooted in experience and context.
+            The iceberg is a common metaphor for the distinction between knowledge that can be articulated and the experience and judgment that remain harder to express.
           </figcaption>
         </figure>
 
         <p>
-          Not everything a person knows can be easily represented. Knowledge management distinguishes between <em>explicit knowledge</em>, which can be expressed as a procedure, definition, rule, or other artifact, and <a href="glossary.html#tacit-knowledge">tacit knowledge</a>, the experience and contextual judgment that are much harder to put into words.
+          Knowledge management distinguishes between
+          <a href="glossary.html#explicit-knowledge">explicit knowledge</a> and
+          <a href="glossary.html#tacit-knowledge">tacit knowledge</a>.
+          Explicit knowledge can be articulated and recorded as a procedure, definition, specification, rule, or other artifact. Tacit knowledge is rooted in experience, judgment, intuition, and context and is harder to express fully.
         </p>
 
         <p>
-          A support engineer who has just resolved an issue may know what fixed it, why it worked, which possibilities were ruled out, which clues mattered, and how the same problem might appear under different circumstances. Turning that understanding into an article requires choices about what to preserve, what to omit, how to describe the problem, and which terms another person might use to find it.
+          Dalkir treats these forms differently because they present different challenges for capture. Explicit knowledge can be codified relatively directly, while tacit knowledge first has to be elicited or articulated. Even then, the resulting representation may capture only part of what the person knows.
         </p>
 
         <p>
-          Some of that knowledge will survive the transition into content. Some will not.
+          A support engineer who has just resolved a difficult customer issue may know what fixed it, why the fix worked, which clues mattered, what they ruled out, which symptoms were misleading, and when the same resolution should not be used. Much of that understanding comes from experience rather than from a written procedure.
+        </p>
+
+        <p>
+          Turning that understanding into an article requires selection. The engineer has to decide which diagnostic details matter, how to describe the problem, which terminology another person might use, which exceptions deserve attention, and how much context a reader will need.
+        </p>
+
+        <p>
+          The article preserves the parts of the engineer&rsquo;s knowledge that can be articulated and selected for inclusion. The resulting representation is shaped by the author&rsquo;s choices and by the constraints of the system that stores it.
         </p>
       </div>
 
       <h2 id="codification-and-ia">Codification and Information Architecture</h2>
 
       <p>
-        Codification does not happen independently of information architecture. Existing templates, metadata, taxonomies, terminology, and governance influence how new knowledge is represented. A required field determines what information an author must supply. A controlled vocabulary constrains how a concept can be named. A template establishes which kinds of information receive emphasis.
+        Codification takes place within an existing information architecture. Templates determine which types of information authors are prompted to provide. Metadata fields determine which attributes can be recorded. Controlled vocabularies influence which terms can be used consistently. Taxonomies establish categories and relationships that authors may have to work within.
       </p>
 
       <p>
-        The relationship also works in the other direction. New concepts may require new metadata, categories, relationships, or terminology. As a knowledge system grows, the way knowledge is represented and the way it is organized influence one another.
+        A template with fields for <em>Issue</em>, <em>Cause</em>, and <em>Resolution</em>, for example, encourages an author to represent knowledge as a particular kind of problem-and-solution relationship. That structure emphasizes some information over others. Diagnostic reasoning, uncertainty, alternative explanations, or contextual knowledge may be harder to capture when the structure provides no clear place for them.
       </p>
 
       <p>
-        Before a reader navigates a hierarchy or enters a search query, earlier decisions have already shaped what knowledge is available, what it is called, and which relationships have been preserved.
+        New knowledge can also expose weaknesses in the existing architecture. A new concept may not fit the controlled vocabulary. An article may belong to several categories rather than one. A recurring relationship may reveal the need for a new metadata field or content type.
+      </p>
+
+      <p>
+        The existing architecture influences what authors are able or encouraged to capture, while newly represented knowledge can reveal where that architecture needs to change. Codification and information architecture continually shape one another as the knowledge system grows.
+      </p>
+
+      <p>
+        Decisions about scope, terminology, emphasis, and relationships have already framed the knowledge before a reader encounters it. Later structural choices build on those earlier representations.
       </p>
 
       <h2 id="design-implications">What This Means for Your Work</h2>
 
       <p>
-        Information architecture does not begin with the navigation menu. Decisions made while knowledge is captured and represented become part of the architecture that later supports classification, navigation, search, and retrieval.
+        Designing a knowledge system requires attention to how knowledge becomes content as well as how that content is organized afterward. Templates, metadata, vocabulary, contributor guidance, and governance all influence what the system is capable of representing.
       </p>
 
       <p>
-        The next section, <a href="structural-models.html">structural models</a>, examines how those representations are organized into larger structures and how those structures influence interpretation.
+        Information architects and knowledge practitioners should ask whether the structure supports the knowledge people actually need to preserve. Are important distinctions represented? Can authors capture necessary context and exceptions? Does the vocabulary reflect the concepts users and practitioners rely on? Can relationships between pieces of knowledge be expressed, or are they lost because the system has nowhere to put them?
+      </p>
+
+      <p>
+        Navigation, search, classification, and AI retrieval can only work with the content, terminology, metadata, and relationships that have been made available to them. A strong retrieval experience cannot fully compensate for knowledge that was never captured or distinctions that disappeared during codification.
+      </p>
+
+      <p>
+        The next section, <a href="structural-models.html">structural models</a>, moves from individual representations to the larger structures used to organize them and examines how those structures influence interpretation.
       </p>
 
       <div class="article-pagination">
@@ -111,6 +178,7 @@
           <span class="pagination-direction">&larr; Previous &middot; Part One</span>
           <span class="pagination-title">IA &amp; Rhetoric</span>
         </a>
+
         <a class="pagination-next" href="structural-models.html">
           <span class="pagination-direction">Next &middot; Part Three &rarr;</span>
           <span class="pagination-title">Structural Models</span>
@@ -121,7 +189,9 @@
     <aside class="sidebar" aria-label="Page sidebar">
       <nav class="toc" aria-label="On this page">
         <p class="toc-heading">On this page</p>
+
         <ul>
+          <li><a href="#information-to-knowledge">From Information to Knowledge</a></li>
           <li><a href="#what-codification-does">What Codification Involves</a></li>
           <li><a href="#the-tacitexplicit-distinction">Why Knowledge Resists Capture</a></li>
           <li><a href="#codification-and-ia">Codification and Information Architecture</a></li>
@@ -134,12 +204,12 @@
 
         <div class="key-term-ref">
           <strong><a href="glossary.html#codification">Codification</a></strong>
-          Representing knowledge in a form that can be stored, shared, and used within a system.
+          The process of representing knowledge in a form that can be stored, shared, and used within a system.
         </div>
 
         <div class="key-term-ref">
           <strong><a href="glossary.html#explicit-knowledge">Explicit Knowledge</a></strong>
-          Knowledge that can be expressed and recorded as a procedure, definition, rule, or other artifact.
+          Knowledge that has been articulated and recorded in a form that others can access and use.
         </div>
 
         <div class="key-term-ref">
@@ -158,3 +228,4 @@
   <script src="scroll-spy.js" defer></script>
 </body>
 </html>
+```
