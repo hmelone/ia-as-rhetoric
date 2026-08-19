@@ -226,24 +226,31 @@ main p { margin-bottom: 1.25rem; }
 main p:last-child { margin-bottom: 0; }
 
 /* ── Article Content Lists ── */
-main .content-list {
-  margin: 0.5rem 0 1.5rem;
-  padding-left: 1.4rem;
-  list-style-position: outside;
+main ul.content-list {
+  list-style: none;
+  margin: 0.6rem 0 1.5rem;
+  padding: 0;
 }
 
-main .content-list li {
-  margin-bottom: 0.35rem;
-  padding-left: 0.2rem;
-  line-height: 1.6;
+main ul.content-list li {
+  position: relative;
+  margin: 0 0 0.45rem;
+  padding-left: 1.25rem;
+  line-height: 1.55;
 }
 
-main .content-list li:last-child {
-  margin-bottom: 0;
-}
-
-main .content-list li::marker {
+main ul.content-list li::before {
+  content: "•";
+  position: absolute;
+  left: 0.2rem;
+  top: 0;
   font-size: 0.7em;
+  line-height: 1.75;
+  color: var(--ink);
+}
+
+main ul.content-list li:last-child {
+  margin-bottom: 0;
 }
 
 /* When a paragraph follows a .clearfix wrapper (which contains a
